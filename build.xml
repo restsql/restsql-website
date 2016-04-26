@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="restsql-website" default="dist">
+	<property file="build.properties" />
+
+	<target name="dist" depends="builddoc,buildbin,download" description="generates distribution files" />
+
+	<target name="builddoc" description="sets up the doc">
+		<copy todir="WebContent">
+			<fileset dir="../restsql-sdk/WebContent">
+				<exclude name="doc/Overview.html" />
+				<exclude name="doc/Download.html" />
+				<exclude name="doc/ApiExplorer.html" />
+				<exclude name="doc/AdminConsole.html" />
+				<exclude name="api-explorer/**" />
+				<exclude name="database/**" />
+				<exclude name="sqlresources/**" />
+				<exclude name="WEB-INF/**" />
+			</fileset>
+		</copy>
+	</target>
+		
+	<target name="buildbin" description="sets up the dist binaries">
+		<move todir="WebContent/dist/archive">
+			<fileset dir="WebContent/dist" includes="*.*ar" />
+		</move>
+		<copy todir="WebContent/dist">
+			<fileset dir="../restsql-sdk/obj/lib" includes="*.war" />
+			<fileset dir="../restsql/obj/lib" includes="*.jar,*.war" />
+		</copy>
+	</target>
+
+	<target name="download" description="generates download pages">
+		<delete file="WebContent/doc/Download.html" />
+		<delete dir="WebContent/download" includes="*.html" />
+		<delete dir="WebContent/download/java6" includes="*.html" />
+		<copy todir="WebContent/download">
+			<fileset dir="template/download" />
+		</copy>
+		<copy todir="WebContent/doc">
+			<fileset dir="template/doc" />
+		</copy>
+
+		<replace includes="restsql-*.html" token="@@build.version@@" value="${build.version}">
+			<fileset file="WebContent/doc/Download.html" />
+			<fileset dir="WebContent/download" />
+			<fileset dir="WebContent/download/java6" />
+		</replace>
+	</target>
+
+	<target name="clean">
+		<delete dir="WebContent" failonerror="false" includeEmptyDirs="true" quiet="true">
+			<exclude name="doc/ApiExplorer*.png" />
+			<exclude name="doc/ApiExplorer.html" />
+			<exclude name="doc/Overview.html" />
+			<exclude name="doc/Download.html" />
+			<exclude name="doc/AdminConsole.html" />
+			<exclude name="doc/Service*.png" />
+			<exclude name="dist/**" />
+		</delete>
+	</target>
+</project>
