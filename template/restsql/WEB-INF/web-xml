@@ -1,0 +1,34 @@
+	
+	<!-- Protects SQL Resource Generation and Reload  -->
+	<security-role>
+	    <role-name>admin</role-name>
+	</security-role>	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Restricted Resources</web-resource-name>
+			<url-pattern>/tools/res/generate</url-pattern>
+			<url-pattern>/conf/reload/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>UserDatabase</realm-name>
+	</login-config>
+
+
+	<!-- Configure restsql to be called by browser with contents loaded from any site -->
+	<filter>
+		<filter-name>CorsFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CorsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+</web-app>

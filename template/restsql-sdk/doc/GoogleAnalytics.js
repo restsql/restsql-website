@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-	<title>Download restsql-@@build.version@@.jar</title>
-
 	<!-- Google Analytics -->
 	<script>
  	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -15,12 +9,4 @@
 	  ga('send', 'pageview');
  	</script>
 	<!-- End Google Analytics -->
-
-	<script>
-		function download() { window.location.assign("../../dist/java6/restsql-@@build.version@@.jar"); }
-	</script>
 </head>
-<body onload="download()">
-Downloading Java 6 restsql-@@build.version@@.jar ...
-</body>
-</html>

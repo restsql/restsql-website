@@ -1,0 +1,37 @@
+	<!-- Enable directory listing on Tomcat -->
+	<servlet>
+		<servlet-name>default</servlet-name>
+		<servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+		<init-param>
+			<param-name>listings</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- Protects /dist and /download directory listing  -->
+	<security-role>
+	    <role-name>admin</role-name>
+	</security-role>	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Restricted Resources</web-resource-name>
+			<url-pattern>/dist/</url-pattern>
+			<url-pattern>/download/</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>UserDatabase</realm-name>
+	</login-config>
+</web-app>

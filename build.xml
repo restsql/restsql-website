@@ -2,60 +2,75 @@
 <project name="restsql-website" default="dist">
 	<property file="build.properties" />
 
-	<target name="dist" depends="builddoc,buildbin,download" description="generates distribution files" />
+	<target name="dist" depends="index,web-xml,overview,download,lib" description="generates distribution files">
+		<copy todir="obj/WebContent">
+			<fileset dir="WebContent" />
+		</copy>
+		<tar destfile="obj/WebContent.tar" basedir="obj/WebContent" />
+		<gzip destfile="obj/WebContent.tar.gz" src="obj/WebContent.tar" />
 
-	<target name="builddoc" description="sets up the doc">
-		<copy todir="WebContent">
-			<fileset dir="../restsql-sdk/WebContent">
-				<exclude name="doc/Overview.html" />
-				<exclude name="doc/Download.html" />
-				<exclude name="doc/ApiExplorer.html" />
-				<exclude name="doc/AdminConsole.html" />
-				<exclude name="api-explorer/**" />
-				<exclude name="database/**" />
-				<exclude name="sqlresources/**" />
-				<exclude name="WEB-INF/**" />
-			</fileset>
-		</copy>
-	</target>
-		
-	<target name="buildbin" description="sets up the dist binaries">
-		<move todir="WebContent/dist/archive">
-			<fileset dir="WebContent/dist" includes="*.*ar" />
-		</move>
-		<copy todir="WebContent/dist">
-			<fileset dir="../restsql-sdk/obj/lib" includes="*.war" />
-			<fileset dir="../restsql/obj/lib" includes="*.jar,*.war" />
-		</copy>
+		<tar destfile="obj/system.tar" basedir="system" />
 	</target>
 
-	<target name="download" description="generates download pages">
-		<delete file="WebContent/doc/Download.html" />
-		<delete dir="WebContent/download" includes="*.html" />
-		<delete dir="WebContent/download/java6" includes="*.html" />
-		<copy todir="WebContent/download">
-			<fileset dir="template/download" />
-		</copy>
-		<copy todir="WebContent/doc">
-			<fileset dir="template/doc" />
-		</copy>
-
-		<replace includes="restsql-*.html" token="@@build.version@@" value="${build.version}">
-			<fileset file="WebContent/doc/Download.html" />
-			<fileset dir="WebContent/download" />
-			<fileset dir="WebContent/download/java6" />
+	<target name="index" description="changes sdk href in restsql's index.html">
+		<mkdir dir="obj/WebContent/restsql" />
+		<copy file="../restsql/WebContent/index.html" todir="obj/WebContent/restsql" />
+		<replace token="../restsql-sdk/" value="../">
+			<fileset file="obj/WebContent/restsql/index.html" />
 		</replace>
 	</target>
 
+	<target name="web-xml" description="adds security contstraints to both webapps web.xmls">
+		<mkdir dir="obj/WebContent/restsql/WEB-INF" />
+		<copy file="../restsql/WebContent/WEB-INF/web.xml" todir="obj/WebContent/restsql/WEB-INF" />
+		<loadfile property="web-xml" srcFile="template/restsql/WEB-INF/web-xml" />
+		<replace token="&lt;/web-app&gt;" value="${web-xml}">
+			<fileset file="obj/WebContent/restsql/WEB-INF/web.xml" />
+		</replace>
+
+		<mkdir dir="obj/WebContent/restsql-sdk/WEB-INF" />
+		<copy file="../restsql-sdk/WebContent/WEB-INF/web.xml" todir="obj/WebContent/restsql-sdk/WEB-INF" />
+		<loadfile property="web-xml-sdk" srcFile="template/restsql-sdk/WEB-INF/web-xml" />
+		<replace token="&lt;/web-app&gt;" value="${web-xml-sdk}">
+			<fileset file="obj/WebContent/restsql-sdk/WEB-INF/web.xml" />
+		</replace>
+	</target>
+
+	<target name="overview" description="injects google analytics into Overview.html">
+		<mkdir dir="obj/WebContent/restsql-sdk/doc" />
+		<copy file="../restsql-sdk/WebContent/doc/Overview.html" todir="obj/WebContent/restsql-sdk/doc" />
+		<loadfile property="GoogleAnalytics" srcFile="template/restsql-sdk/doc/GoogleAnalytics.js" />
+		<replace token="&lt;/head&gt;" value="${GoogleAnalytics}">
+			<fileset file="obj/WebContent/restsql-sdk/doc/Overview.html" />
+		</replace>
+	</target>
+
+	<target name="download" description="generates download pages">
+		<mkdir dir="obj/WebContent/restsql-sdk/download" />
+		<copy todir="obj/WebContent/restsql-sdk/download">
+			<fileset dir="template/restsql-sdk/download" />
+		</copy>
+		<mkdir dir="obj/WebContent/restsql-sdk/doc" />
+		<copy todir="obj/WebContent/restsql-sdk/doc">
+			<fileset dir="template/restsql-sdk/doc" includes="*.html" />
+		</copy>
+
+		<replace includes="restsql-*.html" token="@@build.version@@" value="${build.version}">
+			<fileset file="obj/WebContent/restsql-sdk/doc/Download.html" />
+			<fileset dir="obj/WebContent/restsql-sdk/download" />
+		</replace>
+	</target>
+
+	<target name="lib" description="sets up the dist binaries">
+		<mkdir dir="obj/WebContent/restsql-sdk/dist" />
+		<copy todir="obj/WebContent/restsql-sdk/dist">
+			<fileset dir="../restsql-sdk/obj/lib" includes="*.war" />
+			<fileset dir="../restsql/obj/lib" includes="*.jar,*.war" />
+		</copy>
+		<echo message="Don't forget to push the current release to dist-archive!" />
+	</target>
+
 	<target name="clean">
-		<delete dir="WebContent" failonerror="false" includeEmptyDirs="true" quiet="true">
-			<exclude name="doc/ApiExplorer*.png" />
-			<exclude name="doc/ApiExplorer.html" />
-			<exclude name="doc/Overview.html" />
-			<exclude name="doc/Download.html" />
-			<exclude name="doc/AdminConsole.html" />
-			<exclude name="doc/Service*.png" />
-			<exclude name="dist/**" />
-		</delete>
+		<delete dir="obj" failonerror="false" includeEmptyDirs="true" quiet="true" />
 	</target>
 </project>

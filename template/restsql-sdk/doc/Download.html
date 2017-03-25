@@ -3,12 +3,30 @@
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>restSQL HTTP API Explorer</title>
+<title>restSQL Download</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" type="image/png" href="assets/favicon.ico" />
 <link rel="stylesheet" href="assets/bootstrap.min.css">
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js"></script>
+<!-- Google Analytics -->
+<script>
+	(function(i, s, o, g, r, a, m) {
+		i['GoogleAnalyticsObject'] = r;
+		i[r] = i[r] || function() {
+			(i[r].q = i[r].q || []).push(arguments)
+		}, i[r].l = 1 * new Date();
+		a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+		a.async = 1;
+		a.src = g;
+		m.parentNode.insertBefore(a, m)
+	})(window, document, 'script', '//www.google-analytics.com/analytics.js',
+			'ga');
+
+	ga('create', 'UA-23642030-1', 'auto');
+	ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
@@ -25,13 +43,14 @@
 						<li><a href="Overview.html">Overview</a></li>
 						<li><a href="Architecture.html">Architecture</a></li>
 						<li><a href="Concepts.html">Concepts</a></li>
-						<li><a href="AdminConsole.html">Admin Console</a></li>
+						<li><a href="/restsql/" target="_blank">Explore Service &nbsp; <span class="glyphicon glyphicon-star-empty"></span></a></li>
 					</ul></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">API<b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="api/index.html">HTTP API Reference</a></li>
 						<li><a href="api/ResHttpStatus.html">HTTP API Status Codes</a></li>
-						<li><a href="ApiExplorer.html">HTTP API Explorer</a></li>
+						<li><a href="../api-explorer/index.html" target="_blank">HTTP API Explorer</a></li>
+						<li><a href="/restsql/swagger-ui/" target="_blank">HTTP API Swagger UI &nbsp; <span class="glyphicon glyphicon-star"></span></a></li>
 						<li class="divider"></li>
 						<li><a href="../javadoc/api/index.html">Java API Javadoc</a></li>
 						<li><a href="../examples/java">Java API Examples</a></li>
@@ -76,18 +95,38 @@
 	<div class="container">
 
 		<div class="page-header">
-			<h1>HTTP API Explorer</h1>
+			<h1>Download</h1>
 		</div>
 
-		<div class="text">
-			This is a tool included in the SDK that helps you understand the HTTP API. The tool is an adjunct to the HTTP API <a href="api/index.html">Reference</a>. The tool is an interactive browser application that allows you to pick sample SQL Resources, operations and parameters and view the request and response details.
-		</div>
-		<p class="image">
-			<img src="ApiExplorerScreenshot.png" class="img-responsive" alt="HTTP API Explorer Screenshot" title="HTTP API Explorer Screenshot" width="500" height="400" style="border: 1px solid black" />
+		<h2>Current Release @@build.version@@</h2>
+		<ul>
+			<li>Java 7
+				<ul>
+					<li><a href="../download/restsql-war.html">WAR</a></li>
+					<li><a href="../download/restsql-jar.html">JAR</a></li>
+					<li><a href="../download/restsql-javadoc.html">Javadoc</a></li>
+					<li><a href="../download/restsql-src.html">Source</a></li>
+					<li><a href="../download/restsql-sdk.html">SDK</a></li>
+				</ul>
+			</li>
+			<li>Docker Images (hosted on Docker Hub/docker.io registry)
+				<ul>
+					<li><a href="https://hub.docker.com/r/restsql/service/">Service</a>: <code>docker pull restsql/service</code></li>
+					<li><a href="https://hub.docker.com/r/restsql/service-sdk/">Service + SDK</a>: <code>docker pull restsql/service-sdk</code></li>
+					<li><a href="https://hub.docker.com/r/restsql/mysql-sakila/">MySQL + Sakila</a>: <code>docker pull restsql/mysql-sakila</code></li>
+				</ul>
+			</li>
+		</ul>
+
+		<p class="text">
+			Older distributions are available in Github at <a href="http://github.com/restsql/dist-archive">http://github.com/restsql/dist-archive</a>.
 		</p>
-		<div class="text">
-			<a href="ApiExplorerScreenshot.png">See Full Image</a>
-		</div>
+		<p class="text">
+			The source code is hosted by GitHub at <a href="http://github.com/restsql/restsql">http://github.com/restsql/restsql</a> and <a href="http://github.com/restsql/restsql-sdk">http://github.com/restsql/restsql-sdk</a>.
+		</p>
+		<p class="text">
+			<a href="Subscribe.html">Subscribe</a> to our release notifications mailing list.
+		</p>
 
 	</div>
 
