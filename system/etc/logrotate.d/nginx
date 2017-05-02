@@ -1,0 +1,15 @@
+/var/log/nginx/access_restsql.org.log
+/var/log/nginx/error_restsql.org.log
+/var/log/nginx/access_sawers.com.log
+/var/log/nginx/error_sawers.com.log
+{
+	size 2M
+	rotate 10
+	missingok
+	notifempty
+	compress
+	delaycompress
+	postrotate
+		docker inspect nginx | grep '"Pid":' | awk '{print $2}' | tr -d ',' | xargs kill -USR1
+	endscript
+}
