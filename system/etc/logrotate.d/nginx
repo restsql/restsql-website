@@ -10,6 +10,6 @@
 	compress
 	delaycompress
 	postrotate
-		docker inspect nginx | grep '"Pid":' | awk '{print $2}' | tr -d ',' | xargs kill -USR1
+		docker inspect -f '{{ .State.Pid }}' nginx | xargs kill -USR1
 	endscript
 }
