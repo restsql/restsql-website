@@ -1,7 +1,5 @@
 /var/log/nginx/access_restsql.org.log
 /var/log/nginx/error_restsql.org.log
-/var/log/nginx/access_sawers.com.log
-/var/log/nginx/error_sawers.com.log
 {
 	size 2M
 	rotate 10
