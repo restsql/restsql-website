@@ -1,2 +1,0 @@
-# Recreate the mysql docker container every day at 5am UTC
-0 5 * * * /root/docker/recreate_mysql.sh

@@ -1,0 +1,55 @@
+version: '3.3'
+
+services:
+  ghost:
+    container_name: ghost
+    image: ghost:1.16.2-alpine
+    ports:
+      - "2368:2368"
+    environment:
+      - url=http://sawers.com/blog
+    volumes:
+      - /var/lib/ghost/content:/var/lib/ghost/content
+    networks:
+      - local
+    restart: always
+
+  mysqld:
+    container_name: mysqld
+    image: restsql/mysql-sakila
+    ports:
+      - "3306:3306"
+    networks:
+      local:
+        aliases:
+          - mysql
+    restart: always
+
+  restsql:
+    container_name: restsql
+    image: restsql/service-sdk
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/log/restsql:/var/log/restsql
+    networks:
+      - local
+    restart: always
+
+  nginx:
+    container_name: nginx
+    image: nginx:1.23-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - /etc/nginx:/etc/nginx
+      - /var/www:/var/www
+      - /var/log/nginx:/var/log/nginx
+    security_opt:
+      - seccomp:unconfined
+    networks:
+      - local
+    restart: always
+
+networks:
+  local:

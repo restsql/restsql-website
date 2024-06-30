@@ -1,0 +1,2 @@
+# Recreate the mysql docker container every day at 5am UTC
+0 5 * * * docker-compose --file /root/docker/docker-compose.yml restart mysqld; logger "recreated mysqld container"
