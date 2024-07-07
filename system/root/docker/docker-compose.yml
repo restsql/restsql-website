@@ -1,19 +1,6 @@
 version: '3.3'
 
 services:
-  ghost:
-    container_name: ghost
-    image: ghost:1.16.2-alpine
-    ports:
-      - "2368:2368"
-    environment:
-      - url=http://sawers.com/blog
-    volumes:
-      - /var/lib/ghost/content:/var/lib/ghost/content
-    networks:
-      - local
-    restart: always
-
   mysqld:
     container_name: mysqld
     image: restsql/mysql-sakila
